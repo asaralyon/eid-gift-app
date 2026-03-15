@@ -4,296 +4,272 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>🎁 Aïd Moubarak | Safwan Taleb</title>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Montserrat:wght@300;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Montserrat:wght@300;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --gold-bright: #FFE873;
-            --gold-deep: #b8860b;
-            --emerald-light: #10b981;
-            --emerald-dark: #064e3b;
-            --cream: #FFFDF5;
-            --glass: rgba(255, 255, 255, 0.4);
-            --text-dark: #012b1a;
+            --gold: #D4AF37;
+            --gold-light: #F9E498;
+            --emerald: #065f46;
+            --cream: #FFFCF5;
+            --glass: rgba(255, 255, 255, 0.7);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         
         body { 
-            background-color: var(--cream);
-            color: var(--text-dark); 
-            font-family: 'Montserrat', sans-serif; 
+            background: var(--cream); 
+            font-family: 'Tajawal', sans-serif; 
             overflow: hidden; 
-            height: 100dvh;
-            display: flex;
-            flex-direction: column;
+            height: 100dvh; 
+            color: var(--emerald);
         }
 
-        /* ── COMPLEX BACKGROUND (Image + Vidéo fusionnée) ── */
+        /* ── ARRIÈRE-PLAN JOYEUX (Non-flou) ── */
         #bg-container {
             position: fixed;
             inset: 0;
-            z-index: -2;
-            /* Utilisation de l'image lumineuse et joyeuse comme base */
-            background-image: url('https://image.pollinations.ai/prompt/A%20high-end%2C%20bright%20and%20joyful%20Eid%20wallpaper%20optimized%20for%20mobile.%20Minimalist%20Islamic%20art%20style%20with%20pastel%20green%2C%20soft%20gold%2C%20and%20cream%20textures.%20Cheerful%20crescent%20moon%20with%20delicate%20flowers%2C%20elegant%20lanterns%20with%20soft%20warm%20lights%20floating.%20Professional%20graphic%20design%2C%208k%20resolution%2C%20cinematic%20lighting%2C%20sophisticated%20and%20modern%2C%20uplifting%20atmosphere.');
-            background-size: cover;
-            background-position: center;
+            z-index: -1;
+            background: radial-gradient(circle at top right, #fff9e6 0%, var(--cream) 100%);
         }
 
-        #video-bg-iframe {
+        #ytBgIframe {
             position: absolute;
             top: 50%; left: 50%;
             width: 100vh; height: 100dvh; 
-            transform: translate(-50%, -50%) scale(2.8);
-            opacity: 0.25; /* Superposition légère de la vidéo pour le mouvement */
+            transform: translate(-50%, -50%) scale(2.5);
+            opacity: 0.15; /* Très léger pour laisser le côté "joyeux/clair" dominer */
             pointer-events: none;
-            /* Flou supprimé */
         }
 
-        /* ── YOUTUBE MUSIC (CACHÉ) ── */
-        #music-container { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
-
-        .overlay-warmth {
-            position: fixed;
-            inset: 0;
-            background: radial-gradient(circle at center, transparent 30%, rgba(255, 245, 200, 0.2) 100%);
-            z-index: -1;
-        }
-
-        main {
+        /* ── INTERFACE ── */
+        #app {
             position: relative;
             z-index: 10;
-            flex: 1;
+            height: 100dvh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
-            padding: 60px 25px 80px;
+            padding: 40px 20px 60px;
+            text-align: center;
         }
 
-        .header h1 {
+        .screen {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hidden { opacity: 0; pointer-events: none; transform: translateY(20px); }
+
+        /* ── TITRES ── */
+        .eid-title {
             font-family: 'Amiri', serif;
-            font-size: clamp(3.2rem, 14vw, 5rem);
-            color: var(--emerald-dark);
-            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 5px;
+            font-size: clamp(3rem, 15vw, 5rem);
+            color: var(--emerald);
+            text-shadow: 2px 2px 0px rgba(212, 175, 55, 0.3);
+            margin-bottom: 0;
         }
 
-        /* ── LE CADEAU AMÉLIORÉ (SVG COMPLEXE) ── */
-        .gift-wrapper {
+        /* ── CADEAU PREMIUM (SVG) ── */
+        .gift-container {
             position: relative;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-        .gift-wrapper:active { transform: scale(0.95); }
-
-        .gift-svg {
             width: 80vw;
-            max-width: 350px;
-            filter: drop-shadow(0 15px 30px rgba(0,0,0,0.2));
-            animation: float 4s ease-in-out infinite;
-        }
-
-        .message-card {
-            background: var(--glass);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 2px solid var(--cream);
-            border-radius: 30px;
-            padding: 35px 25px;
-            width: 100%;
-            max-width: 400px;
-            display: none;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
-        }
-
-        .ar-text {
-            font-family: 'Amiri', serif;
-            font-size: 2.2rem;
-            color: var(--emerald-dark);
-            margin-bottom: 18px;
-            line-height: 1.3;
-        }
-
-        .fr-text {
-            font-size: 1.1rem;
-            color: #333;
-            font-weight: 300;
-        }
-
-        .cta-button {
-            background: linear-gradient(135deg, var(--emerald-light), var(--emerald-dark));
-            color: var(--cream);
-            border: none;
-            padding: 22px 50px;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.2rem;
-            width: 100%;
             max-width: 320px;
-            box-shadow: 0 10px 30px rgba(6, 78, 59, 0.3);
+            animation: float 4s ease-in-out infinite;
             cursor: pointer;
         }
 
-        /* ── ANIMATIONS ── */
         @keyframes float {
             0%, 100% { transform: translateY(0) rotate(0deg); }
             50% { transform: translateY(-20px) rotate(2deg); }
         }
 
-        #sparkles circle {
-            animation: sparkle-anim 2s infinite;
+        /* ── VOICE INDICATOR (Premium Look) ── */
+        .equalizer {
+            display: flex;
+            gap: 4px;
+            height: 30px;
+            align-items: flex-end;
+            margin: 20px 0;
             opacity: 0;
+            transition: opacity 0.3s;
         }
-        @keyframes sparkle-anim {
-            0%, 100% { opacity: 0; transform: scale(0); }
-            50% { opacity: 1; transform: scale(1.5); }
+        .equalizer.active { opacity: 1; }
+        .bar {
+            width: 4px;
+            background: var(--gold);
+            border-radius: 2px;
+            animation: bounce 0.5s ease-in-out infinite alternate;
+        }
+        @keyframes bounce { from { height: 5px; } to { height: 25px; } }
+
+        /* ── CARTES DE MESSAGE ── */
+        .msg-card {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 2px solid #fff;
+            border-radius: 30px;
+            padding: 30px 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            width: 100%;
+            max-width: 380px;
         }
 
-        .hidden { display: none !important; }
+        .ar-text { font-family: 'Amiri', serif; font-size: 2rem; margin-bottom: 10px; }
+        .fr-text { font-size: 1rem; font-weight: 300; opacity: 0.8; }
+
+        /* ── BOUTONS ── */
+        .btn {
+            background: linear-gradient(135deg, var(--emerald), #047857);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: 0 10px 25px rgba(6, 95, 70, 0.2);
+            cursor: pointer;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .btn-wa { background: #25D366; margin-top: 10px; }
     </style>
 </head>
 <body>
 
     <div id="bg-container">
-        <iframe id="video-bg-iframe" src="https://www.youtube.com/embed/AjtVw2DZhWE?autoplay=1&mute=1&loop=1&playlist=AjtVw2DZhWE&controls=0&modestbranding=1&playsinline=1" frameborder="0"></iframe>
+        <iframe id="ytBgIframe" src="https://www.youtube.com/embed/AjtVw2DZhWE?autoplay=1&mute=1&loop=1&playlist=AjtVw2DZhWE&controls=0&modestbranding=1&playsinline=1" frameborder="0"></iframe>
     </div>
 
-    <div id="music-container">
-        <div id="player"></div>
+    <div id="app">
+        <div class="screen" id="screen-intro">
+            <h1 class="eid-title">عيد مبارك</h1>
+            <p style="letter-spacing: 5px; margin-bottom: 30px; opacity: 0.6;">EID MUBARAK</p>
+            
+            <div class="gift-container" onclick="startExperience()">
+                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="giftGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#059669" /><stop offset="100%" style="stop-color:#064e3b" />
+                        </linearGradient>
+                    </defs>
+                    <rect x="40" y="80" width="120" height="100" rx="15" fill="url(#giftGrad)" />
+                    <rect x="35" y="70" width="130" height="35" rx="10" fill="#10b981" />
+                    <rect x="90" y="70" width="20" height="110" fill="#D4AF37" />
+                    <circle cx="80" cy="65" r="15" fill="none" stroke="#D4AF37" stroke-width="8" />
+                    <circle cx="120" cy="65" r="15" fill="none" stroke="#D4AF37" stroke-width="8" />
+                    <circle cx="100" cy="70" r="12" fill="#F9E498" />
+                    <g id="gift-face">
+                        <circle cx="75" cy="130" r="6" fill="#fff" />
+                        <circle cx="125" cy="130" r="6" fill="#fff" />
+                        <path id="mouth" d="M 90 150 Q 100 155 110 150" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" />
+                    </g>
+                </svg>
+            </div>
+
+            <p style="margin: 20px 0; font-size: 0.9rem;">De la part de <strong>Safwan Taleb</strong></p>
+            <button class="btn" onclick="startExperience()">🎁 OUVRIR MON CADEAU</button>
+        </div>
+
+        <div class="screen hidden" id="screen-exp">
+            <div class="equalizer" id="equalizer">
+                <div class="bar"></div><div class="bar" style="animation-delay: 0.1s"></div>
+                <div class="bar" style="animation-delay: 0.2s"></div><div class="bar" style="animation-delay: 0.3s"></div>
+                <div class="bar" style="animation-delay: 0.4s"></div>
+            </div>
+
+            <div class="msg-card">
+                <p class="ar-text" id="txt-ar">جاري التحميل...</p>
+                <p class="fr-text" id="txt-fr">Préparation de la surprise...</p>
+            </div>
+            
+            <div class="gift-container" style="width: 40vw; margin-top: 30px;">
+                <svg viewBox="0 0 200 200">
+                    <rect x="40" y="80" width="120" height="100" rx="15" fill="#064e3b" />
+                    <rect x="90" y="80" width="20" height="100" fill="#D4AF37" />
+                    <g id="gift-face-mini">
+                        <circle cx="75" cy="130" r="5" fill="#fff" />
+                        <circle cx="125" cy="130" r="5" fill="#fff" />
+                        <path id="mouth-mini" d="M 90 150 Q 100 160 110 150" stroke="#fff" stroke-width="3" fill="none" />
+                    </g>
+                </svg>
+            </div>
+        </div>
+
+        <div class="screen hidden" id="screen-final">
+            <h2 class="eid-title" style="font-size: 3.5rem;">تقبل الله منكم</h2>
+            <div class="msg-card">
+                <p style="font-weight: 700; color: var(--gold);">Safwan Taleb</p>
+                <p>vous souhaite un merveilleux Aïd !</p>
+            </div>
+            <div class="actions" style="width: 100%; display: flex; flex-direction: column; align-items: center; margin-top: 20px;">
+                <button class="btn btn-wa" onclick="shareWA()">📤 Partager sur WhatsApp</button>
+                <button class="btn" style="background: none; color: var(--emerald); box-shadow: none;" onclick="location.reload()">🔄 Revoir</button>
+            </div>
+        </div>
     </div>
-
-    <div class="overlay-warmth"></div>
-
-    <main>
-        <div class="header">
-            <h1>عيد مبارك</h1>
-            <p style="letter-spacing: 6px; font-size: 0.9rem; font-weight: 300; color: #555;">EID MUBARAK</p>
-        </div>
-
-        <div class="gift-wrapper" id="gift-ui" onclick="openGift()">
-            <svg class="gift-svg" viewBox="0 0 200 200">
-                <defs>
-                    <linearGradient id="gradGold" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" stop-color="#FFF8D1" />
-                        <stop offset="50%" stop-color="#FFD700" />
-                        <stop offset="100%" stop-color="#b8860b" />
-                    </linearGradient>
-                    <linearGradient id="gradEmerald" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#34d399" />
-                        <stop offset="100%" stop-color="#064e3b" />
-                    </linearGradient>
-                    <pattern id="patternIslamic" x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse">
-                        <path d="M5 0 L10 5 L5 10 L0 5 Z" fill="#043a2b" opacity="0.3"/>
-                    </pattern>
-                </defs>
-                
-                <rect x="40" y="85" width="120" height="95" rx="12" fill="url(#gradEmerald)" />
-                <rect x="40" y="85" width="120" height="95" rx="12" fill="url(#patternIslamic)" />
-                <path d="M 40 170 Q 40 180 52 180 L 148 180 Q 160 180 160 170 Z" fill="#022c22" />
-
-                <rect x="35" y="70" width="130" height="35" rx="8" fill="#10b981" stroke="#fff" stroke-width="1.5" />
-                
-                <rect x="90" y="70" width="20" height="110" fill="url(#gradGold)" stroke="#b8860b" stroke-width="0.5"/>
-                
-                <g id="ribbon-bow">
-                    <ellipse cx="80" cy="62" rx="20" ry="12" fill="url(#gradGold)" stroke="#b8860b" stroke-width="1"/>
-                    <ellipse cx="120" cy="62" rx="20" ry="12" fill="url(#gradGold)" stroke="#b8860b" stroke-width="1"/>
-                    <circle cx="100" cy="70" r="14" fill="#FFD700" stroke="#fff" stroke-width="2"/>
-                </g>
-
-                <g id="face">
-                    <circle cx="75" cy="135" r="8" fill="#fff" />
-                    <circle cx="75" cy="135" r="4" fill="#000" />
-                    <circle cx="125" cy="135" r="8" fill="#fff" />
-                    <circle cx="125" cy="135" r="4" fill="#000" />
-                    <path id="mouth" d="M 90 155 Q 100 162 110 155" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round" />
-                    <ellipse cx="65" cy="150" rx="8" ry="4" fill="#fb923c" opacity="0.6"/>
-                    <ellipse cx="135" cy="150" rx="8" ry="4" fill="#fb923c" opacity="0.6"/>
-                </g>
-
-                <g id="sparkles">
-                    <circle cx="30" cy="60" r="3" fill="#FFE873" animation-delay="0s"/>
-                    <circle cx="170" cy="90" r="2.5" fill="#fff" animation-delay="0.5s"/>
-                    <circle cx="50" cy="190" r="2" fill="#FFE873" animation-delay="1s"/>
-                    <circle cx="150" cy="50" r="3" fill="#fff" animation-delay="1.5s"/>
-                </g>
-            </svg>
-        </div>
-
-        <div class="message-card" id="msg-card">
-            <p class="ar-text" id="ar-txt">...</p>
-            <p class="fr-text" id="fr-txt">...</p>
-            <p style="color: var(--emerald-dark); margin-top: 20px; font-weight: 700; font-size: 0.9rem;">✦ Safwan Taleb ✦</p>
-        </div>
-
-        <button class="cta-button" id="btn-start" onclick="openGift()">
-            🎁 اِفْتَحْ هَدِيَّتَك
-        </button>
-
-        <p id="footer-text" style="font-size: 0.8rem; opacity: 0.6; color: #555;">De Safwan Taleb • 2026</p>
-    </main>
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-    <script src="https://www.youtube.com/iframe_api"></script>
     <script>
-        const voiceData = [
-            { ar: "السلام عليكم ورحمة الله وبركاته", fr: "La paix soit sur vous", dur: 3800 },
-            { ar: "عيد مبارك سعيد", fr: "Joyeux Aïd Moubarak", dur: 2500 },
-            { ar: "لكم ولعائلتكم الكريمة", fr: "À vous et votre chère famille", dur: 3200 },
-            { ar: "صفوان طالب يتمنى لكم كل الخير والبركة", fr: "Safwan Taleb vous souhaite bonheur et bénédiction", dur: 4500 },
-            { ar: "تقبل الله منا ومنكم صالح الأعمال", fr: "Qu'Allah accepte nos bonnes actions", dur: 5000 }
+        // Utilisation de tes liens audio directs pour une qualité optimale
+        const AUDIO_LINES = [
+            { ar: "السلام عليكم ورحمة الله وبركاته", fr: "La paix soit sur vous", url: "https://www.genspark.ai/api/files/s/5iJprIYQ", dur: 3500 },
+            { ar: "عيد مبارك سعيد لكم ولعائلتكم", fr: "Joyeux Aïd à vous et vos proches", url: "https://www.genspark.ai/api/files/s/x27R1hw1", dur: 3600 },
+            { ar: "صفوان طالب يتمنى لكم كل الخير", fr: "Safwan Taleb vous souhaite le meilleur", url: "https://www.genspark.ai/api/files/s/ZQV1bgpv", dur: 2500 }
         ];
 
-        let player;
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('player', {
-                height: '0', width: '0',
-                videoId: 'aRQlU_9gm3o', // Musique
-                playerVars: { 'autoplay': 0, 'loop': 1, 'playlist': 'aRQlU_9gm3o' }
-            });
-        }
-
         function animateMouth(isTalking) {
-            const mouth = document.getElementById('mouth');
+            const m1 = document.getElementById('mouth');
+            const m2 = document.getElementById('mouth-mini');
             if (isTalking) {
-                this.mouthInterval = setInterval(() => {
-                    const open = Math.random() > 0.5;
-                    mouth.setAttribute('d', open ? "M 85 155 Q 100 175 115 155" : "M 90 155 Q 100 162 110 155");
-                }, 160);
+                this.interval = setInterval(() => {
+                    const d = Math.random() > 0.5 ? "M 85 150 Q 100 170 115 150" : "M 90 150 Q 100 155 110 150";
+                    m1.setAttribute('d', d); m2.setAttribute('d', d);
+                }, 150);
             } else {
-                clearInterval(this.mouthInterval);
-                mouth.setAttribute('d', "M 90 155 Q 100 162 110 155");
+                clearInterval(this.interval);
             }
         }
 
-        async function openGift() {
-            document.getElementById('btn-start').classList.add('hidden');
-            document.getElementById('msg-card').style.display = 'block';
-            
-            // Lancement musique
-            if(player && player.playVideo) player.playVideo();
+        async function startExperience() {
+            document.getElementById('screen-intro').classList.add('hidden');
+            document.getElementById('screen-exp').classList.remove('hidden');
+            document.getElementById('equalizer').classList.add('active');
 
-            // Confettis
-            confetti({ particleCount: 180, spread: 80, origin: { y: 0.8 }, colors: ['#FFE873', '#10b981', '#ffffff'] });
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.8 }, colors: ['#D4AF37', '#065f46'] });
 
-            for (let msg of voiceData) {
-                document.getElementById('ar-txt').innerText = msg.ar;
-                document.getElementById('fr-txt').innerText = msg.fr;
+            for (let line of AUDIO_LINES) {
+                document.getElementById('txt-ar').innerText = line.ar;
+                document.getElementById('txt-fr').innerText = line.fr;
                 
-                const utter = new SpeechSynthesisUtterance(msg.ar);
-                utter.lang = 'ar-SA';
-                // AJUSTEMENTS VOIX HUMAINE
-                utter.rate = 0.85; // Plus lent
-                utter.pitch = 0.95; // Légèrement plus doux
+                const audio = new Audio(line.url);
+                audio.play();
+                animateMouth(true);
                 
-                utter.onstart = () => animateMouth(true);
-                utter.onend = () => animateMouth(false);
-                window.speechSynthesis.speak(utter);
-
-                await new Promise(r => setTimeout(r, msg.dur));
+                await new Promise(r => setTimeout(r, line.dur));
+                animateMouth(false);
             }
 
-            confetti({ particleCount: 120, spread: 120, origin: { y: 0.4 } });
+            showFinal();
+        }
+
+        function showFinal() {
+            document.getElementById('screen-exp').classList.add('hidden');
+            document.getElementById('screen-final').classList.remove('hidden');
+            confetti({ particleCount: 200, spread: 160, origin: { y: 0.3 } });
+        }
+
+        function shareWA() {
+            const text = encodeURIComponent("🌙 Regardez ce cadeau spécial de l'Aïd de la part de Safwan Taleb : " + window.location.href);
+            window.open(`https://wa.me/?text=${text}`, '_blank');
         }
     </script>
 </body>
