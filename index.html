@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>🎁 Aïd Moubarak | Safwan Taleb</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #FFD700;
+            --emerald: #064e3b;
+            --glass: rgba(0, 0, 0, 0.6);
+            --bg-dark: #020617;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        body { 
+            background: var(--bg-dark); 
+            color: #fff; 
+            font-family: 'Montserrat', sans-serif; 
+            overflow: hidden; 
+            height: 100dvh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ── YOUTUBE BACKGROUND (VISUEL) ── */
+        #video-bg-container {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+        }
+        #video-bg-container iframe {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 100vh; height: 100dvh; 
+            transform: translate(-50%, -50%) scale(2.8); /* Zoom pour portrait mobile */
+            opacity: 0.5;
+            filter: brightness(0.7) blur(1px);
+        }
+
+        /* ── YOUTUBE MUSIC (CACHÉ) ── */
+        #music-container {
+            position: absolute;
+            width: 1px; height: 1px;
+            opacity: 0; pointer-events: none;
+        }
+
+        .overlay-gradient {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at center, transparent, var(--bg-dark) 95%);
+            z-index: 0;
+        }
+
+        main {
+            position: relative;
+            z-index: 10;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 50px 20px 70px;
+        }
+
+        .header h1 {
+            font-family: 'Amiri', serif;
+            font-size: clamp(2.8rem, 12vw, 4.5rem);
+            color: var(--gold);
+            text-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
+        }
+
+        .gift-svg {
+            width: 75vw;
+            max-width: 300px;
+            filter: drop-shadow(0 20px 50px rgba(0,0,0,0.8));
+            animation: float 3s ease-in-out infinite;
+            cursor: pointer;
+        }
+
+        .message-card {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--gold);
+            border-radius: 25px;
+            padding: 30px 20px;
+            width: 100%;
+            max-width: 380px;
+            display: none;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .ar-text {
+            font-family: 'Amiri', serif;
+            font-size: 2rem;
+            color: var(--gold);
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, var(--gold), #b8860b);
+            color: #000;
+            border: none;
+            padding: 22px 45px;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 1.2rem;
+            width: 100%;
+            max-width: 320px;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+            cursor: pointer;
+        }
+
+        .share-btn {
+            margin-top: 15px;
+            background: #25D366;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: bold;
+            display: none;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(3deg); }
+        }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <div id="video-bg-container">
+        <iframe src="https://www.youtube.com/embed/AjtVw2DZhWE?autoplay=1&mute=1&loop=1&playlist=AjtVw2DZhWE&controls=0&modestbranding=1&playsinline=1" frameborder="0"></iframe>
+    </div>
+
+    <div id="music-container">
+        <div id="player"></div>
+    </div>
+
+    <div class="overlay-gradient"></div>
+
+    <main>
+        <div class="header" id="header-ui">
+            <h1>عيد مبارك</h1>
+            <p style="letter-spacing: 6px; font-size: 0.8rem; opacity: 0.8;">EID MUBARAK</p>
+        </div>
+
+        <div id="gift-ui" onclick="openGift()">
+            <svg class="gift-svg" viewBox="0 0 200 200">
+                <defs>
+                    <linearGradient id="boxG" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#065f46" /><stop offset="100%" style="stop-color:#022c22" />
+                    </linearGradient>
+                </defs>
+                <rect x="40" y="80" width="120" height="100" rx="12" fill="url(#boxG)" />
+                <rect x="35" y="70" width="130" height="35" rx="8" fill="#059669" />
+                <rect x="90" y="70" width="20" height="110" fill="#FFD700" />
+                <g id="face">
+                    <circle cx="75" cy="135" r="7" fill="#fff" />
+                    <circle cx="125" cy="135" r="7" fill="#fff" />
+                    <path id="mouth" d="M 90 155 Q 100 160 110 155" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" />
+                </g>
+            </svg>
+        </div>
+
+        <div class="message-card" id="msg-card">
+            <p class="ar-text" id="ar-txt">...</p>
+            <p style="font-size: 1rem; color: #ddd; font-weight: 300;" id="fr-txt">...</p>
+            <p style="color: var(--gold); margin-top: 15px; font-size: 0.8rem;">✦ Safwan Taleb ✦</p>
+        </div>
+
+        <button class="cta-button" id="btn-start" onclick="openGift()">
+            🎁 اِفْتَحْ هَدِيَّتَك
+        </button>
+
+        <a href="#" id="whatsapp-share" class="share-btn" onclick="shareWA()">📤 Envoyer sur WhatsApp</a>
+
+        <p id="footer-text" style="font-size: 0.7rem; opacity: 0.4;">De la part de Safwan Taleb • 2026</p>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+        const voiceData = [
+            { ar: "السلام عليكم ورحمة الله وبركاته", fr: "La paix soit sur vous", dur: 3500 },
+            { ar: "عيد مبارك سعيد لكم ولعائلتكم", fr: "Joyeux Aïd à vous et vos proches", dur: 4000 },
+            { ar: "صفوان طالب يتمنى لكم كل الخير", fr: "Safwan Taleb vous souhaite le meilleur", dur: 4000 },
+            { ar: "تقبل الله منا ومنكم صالح الأعمال", fr: "Qu'Allah accepte nos bonnes actions", dur: 4500 }
+        ];
+
+        let player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '0', width: '0',
+                videoId: 'aRQlU_9gm3o', // Ton fichier musique
+                playerVars: { 'autoplay': 0, 'loop': 1, 'playlist': 'aRQlU_9gm3o' }
+            });
+        }
+
+        function animateMouth(isTalking) {
+            const mouth = document.getElementById('mouth');
+            if (isTalking) {
+                this.mouthInterval = setInterval(() => {
+                    const open = Math.random() > 0.5;
+                    mouth.setAttribute('d', open ? "M 85 155 Q 100 170 115 155" : "M 90 155 Q 100 160 110 155");
+                }, 150);
+            } else {
+                clearInterval(this.mouthInterval);
+                mouth.setAttribute('d', "M 90 155 Q 100 160 110 155");
+            }
+        }
+
+        async function openGift() {
+            document.getElementById('btn-start').classList.add('hidden');
+            document.getElementById('msg-card').style.display = 'block';
+            
+            // Lancement de la musique YouTube
+            if(player && player.playVideo) player.playVideo();
+
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.8 }, colors: ['#FFD700', '#065f46', '#ffffff'] });
+
+            for (let msg of voiceData) {
+                document.getElementById('ar-txt').innerText = msg.ar;
+                document.getElementById('fr-txt').innerText = msg.fr;
+                
+                const utter = new SpeechSynthesisUtterance(msg.ar);
+                utter.lang = 'ar-SA';
+                utter.onstart = () => animateMouth(true);
+                utter.onend = () => animateMouth(false);
+                window.speechSynthesis.speak(utter);
+
+                await new Promise(r => setTimeout(r, msg.dur));
+            }
+
+            document.getElementById('whatsapp-share').style.display = 'inline-block';
+            confetti({ particleCount: 200, spread: 160, origin: { y: 0.3 } });
+        }
+
+        function shareWA() {
+            const url = window.location.href;
+            const text = encodeURIComponent("🌙✨ Safwan Taleb vous a envoyé un cadeau spécial pour l'Aïd ! Regardez ici : " + url);
+            window.open(`https://wa.me/?text=${text}`, '_blank');
+        }
+    </script>
+</body>
+</html>
